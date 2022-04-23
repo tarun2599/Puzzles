@@ -3,7 +3,7 @@ package Puzzles;
 public class Player extends Accounts{
 	
 	private double balanceForGame;
-	private double amtKeptAtTable;
+	private double amtKeptAtTable;	//InOneRound
 	private Dealer dealer;
 	private boolean isFolded;
 	
@@ -30,21 +30,23 @@ public class Player extends Accounts{
 	
 	public void check() {
 		if(amtKeptAtTable != dealer.getCurrBet()) {
-			//Can not do this
+			//throw new IllegalCheckException
 		}
 	}
 	public void raise(double amount) {
 		if(this.amtKeptAtTable != dealer.getCurrBet()) {
 			//Check if you have enough balance else all in.
-			//Add amount to pot
-			amtKeptAtTable = dealer.getCurrBet()  + amount ;
-			//Send msg to dealer to increase currBet and move to next
+			double newBet = dealer.getCurrBet()  + amount;
+			dealer.credit(newBet - amtKeptAtTable);//Add amount to pot
+			debit(newBet - amtKeptAtTable);
+			amtKeptAtTable = newBet;
+			dealer.setCurrBet(newBet);
 		}
 	}
 	public void call() {
 		amtKeptAtTable = dealer.getCurrBet();
-		//Add Amount to pot
-		//send msg to dealer to move to next
+		dealer.credit(dealer.getCurrBet() - amtKeptAtTable);
+		debit(dealer.getCurrBet() - amtKeptAtTable);
 		
 	}
 	public void fold() {

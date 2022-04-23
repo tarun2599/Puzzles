@@ -17,6 +17,14 @@ public class Dealer extends Accounts {
 		return currBet;
 	}
 	
+	
+	/**
+	 * @param currBet the currBet to set
+	 */
+	public void setCurrBet(double currBet) {
+		this.currBet = currBet;
+	}
+
 	private void distCards() {}
 	private void waitForPlayerAtPos(int index) {}
 	private void updateCurrBet() {}
