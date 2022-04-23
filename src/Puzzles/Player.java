@@ -4,10 +4,12 @@ public class Player extends Accounts{
 	
 	private double balanceForGame;
 	private double amtKeptAtTable;
+	private Dealer dealer;
+	private boolean isFolded;
 	
-	public Player(double balance, String name) {
+	public Player(Dealer d1,double balance, String name) {
 		super(balance, name);
-		// TODO Auto-generated constructor stub
+		this.dealer = d1;
 	}
 	
 	public Player(String name) {
@@ -27,22 +29,25 @@ public class Player extends Accounts{
 	}
 	
 	public void check() {
-		if(amtKeptAtTable != Dealer.getCurrBet()) {
+		if(amtKeptAtTable != dealer.getCurrBet()) {
 			//Can not do this
 		}
 	}
 	public void raise(double amount) {
-		if(amtKeptAtTable != Dealer.getCurrBet()) {
+		if(this.amtKeptAtTable != dealer.getCurrBet()) {
 			//Check if you have enough balance else all in.
-			//Add amount to table = (currBet - amtKeptAtTable) + raise
-			//amtKeptAtTable = currBet  + raise ;
-			//Send msg to dealer to increase currBet
+			//Add amount to pot
+			amtKeptAtTable = dealer.getCurrBet()  + amount ;
+			//Send msg to dealer to increase currBet and move to next
 		}
 	}
 	public void call() {
-		//
+		amtKeptAtTable = dealer.getCurrBet();
+		//Add Amount to pot
+		//send msg to dealer to move to next
+		
 	}
 	public void fold() {
-		//
+		isFolded = true;
 	}
 }
