@@ -1,18 +1,21 @@
 package Puzzles;
 
+import java.util.ArrayList;
+
 public class Player extends Accounts{
 	
 	private double balanceForGame;
 	private double amtKeptAtTable;	//InOneRound
 	private Dealer dealer;
 	private boolean isFolded;
-	
+	private ArrayList<Card> inHandCards;
 	public Player(Dealer d1,double balance, String name) {
 		super(balance, name);
 		this.dealer = d1;
 	}
 	
-	public Player(String name) {
+	public Player(String name) 
+	{
 		super(name);
 		// TODO Auto-generated constructor stub
 	}
@@ -28,6 +31,10 @@ public class Player extends Accounts{
 		this.balanceForGame = amount;
 	}
 	
+	public void setInHandCards(ArrayList<Card> inHandCards) {
+		this.inHandCards = inHandCards;
+	}
+
 	public void check() {
 		if(amtKeptAtTable != dealer.getCurrBet()) {
 			//throw new IllegalCheckException
