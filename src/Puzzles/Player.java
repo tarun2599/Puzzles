@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Player extends Accounts{
 	
 	private double amtKeptAtTable;	//InOneRound
-	private Dealer dealer;
+	private Table table;
 	private boolean isFolded;
 	private ArrayList<Card> inHandCards;
-	public Player(Dealer d1,double buyIn, String name) {
+	public Player(Table gameTable,double buyIn, String name) {
 		super(buyIn, name);
-		this.dealer = d1;
+		this.table = gameTable;
 	}
 	
 	public Player(String name) 
@@ -25,24 +25,24 @@ public class Player extends Accounts{
 	}
 
 	public void check() {
-		if(amtKeptAtTable != dealer.getCurrBet()) {
+		if(amtKeptAtTable != table.getDealer().getCurrBet()) {
 			//throw new IllegalCheckException
 		}
 	}
 	public void raise(double amount) {
-		if(this.amtKeptAtTable != dealer.getCurrBet()) {
+		if(this.amtKeptAtTable != table.getDealer().getCurrBet()) {
 			//Check if you have enough balance else all in.
-			double newBet = dealer.getCurrBet()  + amount;
-			dealer.credit(newBet - amtKeptAtTable);//Add amount to pot
+			double newBet = table.getDealer().getCurrBet()  + amount;
+			table.getDealer().credit(newBet - amtKeptAtTable);//Add amount to pot
 			debit(newBet - amtKeptAtTable);
 			amtKeptAtTable = newBet;
-			dealer.setCurrBet(newBet);
+			table.getDealer().setCurrBet(newBet);
 		}
 	}
 	public void call() {
-		amtKeptAtTable = dealer.getCurrBet();
-		dealer.credit(dealer.getCurrBet() - amtKeptAtTable);
-		debit(dealer.getCurrBet() - amtKeptAtTable);
+		amtKeptAtTable = table.getDealer().getCurrBet();
+		table.getDealer().credit(table.getDealer().getCurrBet() - amtKeptAtTable);
+		debit(table.getDealer().getCurrBet() - amtKeptAtTable);
 		
 	}
 	public void fold() {
