@@ -4,24 +4,57 @@ import java.util.ArrayList;
 
 public class Table extends Puzzles
 {
-	private ArrayList<Card>[] flock;
-	private Card turn;
-	private Card river;
-	private boolean showFlock = false, showTurn = false, showRiver = false;
 	private ArrayList<Player> players;
 	private Dealer dealer;
 	
-	public void addPlayer(Player P)
-	{
-		players.add(P);
-	}
+	private ArrayList<Boolean> isFolded;
+	private ArrayList<Boolean> playersChance;
+	
+	private double currBet;
+	
+	private ArrayList<Card> flock;
+	private Card turn;
+	private Card river;
+	private boolean showFlock = false, showTurn = false, showRiver = false;
+
 	
 	Table(ArrayList<Player> players, Dealer d1)
 	{
 		this.players = players;
 		this.dealer = d1;
+		this.playersChance = new ArrayList<Boolean>(players.size());
+		this.isFolded = new ArrayList<Boolean>(players.size());
+		
+		for(int i =0; i < players.size(); i++) {
+			playersChance.set(i, false);
+			isFolded.set(i, false);
+		}
+		
 	}
-	public ArrayList<Card>[] getFlock() 
+	
+	/**
+	 * @return the dealer
+	 */
+	public Dealer getDealer() {
+		return dealer;
+	}
+	
+	
+	/**
+	 * @return the players
+	 */
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+	/**
+	 * @return the currBet
+	 */
+	public double getCurrBet() {
+		return currBet;
+	}
+	
+	public ArrayList<Card> getFlock() 
 	{	
 		if(showFlock == false)
 		{
@@ -41,7 +74,7 @@ public class Table extends Puzzles
 			return null;
 		return river;
 	}
-	public void setFlock(ArrayList<Card>[] flock) 
+	public void setFlock(ArrayList<Card> flock) 
 	{
 		this.flock = flock;
 	}
@@ -60,15 +93,25 @@ public class Table extends Puzzles
 	public void setShowRiver() {
 		this.showRiver = true;
 	}
-
+	
 	/**
-	 * @return the dealer
+	 * @param currBet the currBet to set
 	 */
-	public Dealer getDealer() {
-		return dealer;
+	public void setCurrBet(double currBet) {
+		this.currBet = currBet;
 	}
 	
+	public void addPlayer(Player P)
+	{
+		players.add(P);
+	}
 	
+	public void setMeFolded(Player p) {
+		int index = players.indexOf(p);
+		isFolded.set(index, true);
+	}
 	
-	
+	public void setPlayersChance(int i) {
+		playersChance.set(i, true);
+	}
 }

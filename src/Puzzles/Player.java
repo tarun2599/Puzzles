@@ -6,7 +6,6 @@ public class Player extends Accounts{
 	
 	private double amtKeptAtTable;	//InOneRound
 	private Table table;
-	private boolean isFolded;
 	private ArrayList<Card> inHandCards;
 	public Player(Table gameTable,double buyIn, String name) {
 		super(buyIn, name);
@@ -16,36 +15,38 @@ public class Player extends Accounts{
 	public Player(String name) 
 	{
 		super(name);
-		// TODO Auto-generated constructor stub
 	}
 	
+	public void setInHandCardOne(Card inHandCardOne) {
+		this.inHandCards.set(0, inHandCardOne);
+	}
 	
-	public void setInHandCards(ArrayList<Card> inHandCards) {
-		this.inHandCards = inHandCards;
+	public void setInHandCardTwo(Card inHandCardTwo) {
+		this.inHandCards.set(1, inHandCardTwo);
 	}
 
 	public void check() {
-		if(amtKeptAtTable != table.getDealer().getCurrBet()) {
+		if(amtKeptAtTable != table.getCurrBet()) {
 			//throw new IllegalCheckException
 		}
 	}
 	public void raise(double amount) {
-		if(this.amtKeptAtTable != table.getDealer().getCurrBet()) {
+		if(this.amtKeptAtTable != table.getCurrBet()) {
 			//Check if you have enough balance else all in.
-			double newBet = table.getDealer().getCurrBet()  + amount;
+			double newBet = table.getCurrBet()  + amount;
 			table.getDealer().credit(newBet - amtKeptAtTable);//Add amount to pot
 			debit(newBet - amtKeptAtTable);
 			amtKeptAtTable = newBet;
-			table.getDealer().setCurrBet(newBet);
+			table.setCurrBet(newBet);
 		}
 	}
 	public void call() {
-		amtKeptAtTable = table.getDealer().getCurrBet();
-		table.getDealer().credit(table.getDealer().getCurrBet() - amtKeptAtTable);
-		debit(table.getDealer().getCurrBet() - amtKeptAtTable);
+		amtKeptAtTable = table.getCurrBet();
+		table.getDealer().credit(table.getCurrBet() - amtKeptAtTable);
+		debit(table.getCurrBet() - amtKeptAtTable);
 		
 	}
 	public void fold() {
-		isFolded = true;
+		table.setMeFolded(this);
 	}
 }
