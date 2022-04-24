@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 public class Player extends Accounts{
 	
-	private double balanceForGame;
 	private double amtKeptAtTable;	//InOneRound
 	private Dealer dealer;
 	private boolean isFolded;
 	private ArrayList<Card> inHandCards;
-	public Player(Dealer d1,double balance, String name) {
-		super(balance, name);
+	public Player(Dealer d1,double buyIn, String name) {
+		super(buyIn, name);
 		this.dealer = d1;
 	}
 	
@@ -20,16 +19,6 @@ public class Player extends Accounts{
 		// TODO Auto-generated constructor stub
 	}
 	
-	/**
-	 * 
-	 * @param amount Buyin Amount
-	 */
-	
-	public void buyIn(double amount) {
-		if(amount > getMaxbuyIn()) 
-			throw new IllegalArgumentException();
-		this.balanceForGame = amount;
-	}
 	
 	public void setInHandCards(ArrayList<Card> inHandCards) {
 		this.inHandCards = inHandCards;

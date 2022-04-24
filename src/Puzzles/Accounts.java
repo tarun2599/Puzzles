@@ -66,7 +66,7 @@ public abstract class Accounts extends Puzzles{
 	
 	/**
 	 * To debit money from the account
-	 * @param amount Amount to be added.
+	 * @param amount Amount to be removed.
 	 */
 	void debit(double amount) {
 		if(amount < 0)
