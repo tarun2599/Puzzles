@@ -41,30 +41,27 @@ public class Dealer extends Accounts
 		this.table = table;
 	}
 
-	private void distCards(ArrayList<Player> playersList) 
+	public void distCards(ArrayList<Player> playersList) 
 	{
 		Deck dealersDeck = new Deck();
 		dealersDeck.shuffle();
 		
 		//Distribute first card to all the players.
-		for(int i = startFromPlayerAtPos - 1; i < playersList.size();i++) {
-			playersList.get(i).setInHandCardOne(dealersDeck.getNextCard());
-		}
-		for(int i = 0; i < startFromPlayerAtPos -1; i++) {
-			playersList.get(i).setInHandCardOne(dealersDeck.getNextCard());
-		}
-		//Distribute second card to all the players.
-		for(int i = startFromPlayerAtPos; i < playersList.size();i++) {
-			playersList.get(i).setInHandCardTwo(dealersDeck.getNextCard());
-		}
-		for(int i = 0; i < startFromPlayerAtPos -1; i++) {
-			playersList.get(i).setInHandCardTwo(dealersDeck.getNextCard());
+		for(int i = startFromPlayerAtPos - 1; i < playersList.size() + startFromPlayerAtPos - 1;i++) {
+			playersList.get(i % playersList.size()).setInHandCardOne(dealersDeck.getNextCard());
 		}
 		
+		//Distribute second card to all the players.
+		
+		for(int i = startFromPlayerAtPos -1 ; i < playersList.size() + startFromPlayerAtPos - 1; i++) {
+			playersList.get(i % playersList.size()).setInHandCardTwo(dealersDeck.getNextCard());
+		}
+		
+		
 		dealersDeck.getNextCard();	//Skip One Card and distribute flock
-		ArrayList<Card> flock = new ArrayList<Card>(3);
-		for(int i =0; i<3;i++)
-			flock.set(i, dealersDeck.getNextCard());
+		ArrayList<Card> flock = new ArrayList<Card>();
+		for(int i =0; i < 3; i++)
+			flock.add(dealersDeck.getNextCard());
 		table.setFlock(flock);
 
 		dealersDeck.getNextCard();	//Skip One Card and distribute turn
@@ -75,10 +72,18 @@ public class Dealer extends Accounts
 		table.setPlayersChance(startFromPlayerAtPos);
 	}
 	
-	private void waitForPlayerAtPos(int index) {}
-	private void updateCurrBet() {}
-	private void openFlock() {}
-	private void openTurn() {}
-	private void openRiver() {}
+	
+	private void openFlock() 
+	{
+		table.setShowFlock();
+	}
+	private void openTurn() 
+	{
+		table.setShowTurn();
+	}
+	private void openRiver() 
+	{
+		table.setShowRiver();
+	}
 	private void finaliseRound() {}	//Check and distribute money.
 }

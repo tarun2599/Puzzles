@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Table extends Puzzles
 {
-	private ArrayList<Player> players;
+	private ArrayList<Player> players = new ArrayList<Player>();
 	private Dealer dealer;
 	
-	private ArrayList<Boolean> isFolded;
-	private ArrayList<Boolean> playersChance;
+	private ArrayList<Boolean> isFolded = new ArrayList<Boolean>();
+	private ArrayList<Boolean> playersChance = new ArrayList<Boolean>();
 	
 	private double currBet;
 	
@@ -18,24 +18,13 @@ public class Table extends Puzzles
 	private boolean showFlock = false, showTurn = false, showRiver = false;
 
 	
-	Table(ArrayList<Player> players, Dealer d1)
-	{
-		this.players = players;
-		this.dealer = d1;
-		this.playersChance = new ArrayList<Boolean>(players.size());
-		this.isFolded = new ArrayList<Boolean>(players.size());
-		
-		for(int i =0; i < players.size(); i++) {
-			playersChance.set(i, false);
-			isFolded.set(i, false);
-		}
-		
-	}
+	
 	
 	/**
 	 * @return the dealer
 	 */
-	public Dealer getDealer() {
+	public Dealer getDealer() 
+	{
 		return dealer;
 	}
 	
@@ -104,8 +93,14 @@ public class Table extends Puzzles
 	public void addPlayer(Player P)
 	{
 		players.add(P);
+		playersChance.add(false);
+		isFolded.add(false);
 	}
 	
+	public void addDealer(Dealer D)
+	{
+		dealer = D;
+	}
 	public void setMeFolded(Player p) {
 		int index = players.indexOf(p);
 		isFolded.set(index, true);
@@ -114,4 +109,31 @@ public class Table extends Puzzles
 	public void setPlayersChance(int i) {
 		playersChance.set(i, true);
 	}
+	private void updateCurrBet(int raise) 
+	{
+		currBet += raise;
+	}
+	
+	/**
+	 *
+	 */
+	@Override
+	public String toString() {
+		return players.toString() + "\nFlock: " + flock + "\nTurn: " + turn + "\nRiver: " + river;
+	}
+
+
+	public static void main(String[] args) 
+	{
+		Table t1 = new Table();
+		Dealer d1 = new Dealer(t1);
+		Player p1 = new Player(t1, 500, "Tarun");
+		Player p2 = new Player(t1, 500, "Tyagi");
+		t1.addPlayer(p1);
+		t1.addPlayer(p2);
+		t1.addDealer(d1);
+		d1.distCards(t1.getPlayers());
+		System.out.println(t1);
+	}
+
 }

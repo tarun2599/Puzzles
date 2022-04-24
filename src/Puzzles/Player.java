@@ -7,22 +7,25 @@ public class Player extends Accounts{
 	private double amtKeptAtTable;	//InOneRound
 	private Table table;
 	private ArrayList<Card> inHandCards;
-	public Player(Table gameTable,double buyIn, String name) {
+	public Player(Table gameTable,double buyIn, String name) 
+	{
 		super(buyIn, name);
 		this.table = gameTable;
+		this.inHandCards = new ArrayList<Card>();
 	}
 	
 	public Player(String name) 
 	{
 		super(name);
+		this.inHandCards = new ArrayList<Card>();
 	}
 	
 	public void setInHandCardOne(Card inHandCardOne) {
-		this.inHandCards.set(0, inHandCardOne);
+		this.inHandCards.add(inHandCardOne);
 	}
 	
 	public void setInHandCardTwo(Card inHandCardTwo) {
-		this.inHandCards.set(1, inHandCardTwo);
+		this.inHandCards.add(inHandCardTwo);
 	}
 
 	public void check() {
@@ -49,4 +52,10 @@ public class Player extends Accounts{
 	public void fold() {
 		table.setMeFolded(this);
 	}
+
+	@Override
+	public String toString() {
+		return "\nName = " + this.getName() + "\n"+ inHandCards + "\n";
+	}
+	
 }
