@@ -14,6 +14,11 @@ public class PlayHere {
 		d1.distCards(t1.getPlayers());
 		System.out.println(p1);
 		System.out.println(p2);
+		ArrayList<Player> pList = t1.getPlayers();
+		for(int i = 0; i< pList.size(); i++) {
+			if(t1.)
+			System.out.println("Player " + i+1 + "'s chance");
+		}
 		
 		//System.out.println(t1);
 	}
