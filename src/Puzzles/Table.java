@@ -7,17 +7,12 @@ public class Table extends Puzzles
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private Dealer dealer;
 	
-	private ArrayList<Boolean> isFolded = new ArrayList<Boolean>();
-	private ArrayList<Boolean> playersChance = new ArrayList<Boolean>();
-	
 	private double currBet;
-	
 	private ArrayList<Card> flock;
 	private Card turn;
 	private Card river;
 	private boolean showFlock = false, showTurn = false, showRiver = false;
-
-	
+	private int numberOfPlayers = 0;
 	
 	
 	/**
@@ -35,6 +30,15 @@ public class Table extends Puzzles
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
+	
+	
+	/**
+	 * @return the numberOfPlayers
+	 */
+	public int getNumberOfPlayers() {
+		return numberOfPlayers;
+	}
+
 
 	/**
 	 * @return the currBet
@@ -92,28 +96,14 @@ public class Table extends Puzzles
 		this.currBet = currBet;
 	}
 	
-	public void addPlayer(Player P)
-	{
+	public void addPlayer(Player P){
 		players.add(P);
-		playersChance.add(false);
-		isFolded.add(false);
+		numberOfPlayers++;
 	}
 	
-	public void addDealer(Dealer D)
-	{
-		dealer = D;
-	}
-	public void setMeFolded(Player p) {
-		int index = players.indexOf(p);
-		isFolded.set(index, true);
-	}
-	
-	public void setPlayersChance(int i) {
-		playersChance.set(i, true);
-	}
-	private void updateCurrBet(int raise) 
-	{
-		currBet += raise;
+	public void setDealer(Dealer D){
+		if(dealer == null)
+			dealer = D;
 	}
 	
 	/**

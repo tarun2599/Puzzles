@@ -1,10 +1,7 @@
 package Puzzles;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Random;
 
 public class Dealer extends Accounts 
 {
@@ -69,7 +66,6 @@ public class Dealer extends Accounts
 		
 		dealersDeck.getNextCard();	//Skip One Card and distribute river
 		table.setRiver(dealersDeck.getNextCard());
-		table.setPlayersChance(startFromPlayerAtPos);
 	}
 	
 	
@@ -85,5 +81,62 @@ public class Dealer extends Accounts
 	{
 		table.setShowRiver();
 	}
-	private void finaliseRound() {}	//Check and distribute money.
+	
+	public void playRound() {
+		ArrayList<Player> pList = table.getPlayers();
+		distCards(pList);
+		System.out.println(pList);
+		
+		System.out.println("Pre Flock Betting: ");
+		playersTurn(pList);
+		System.out.println(pList);
+		System.out.println("Amount in pot: " + this.getBalance());
+		openFlock();
+		System.out.println("Flock: " + table.getFlock());
+		
+		System.out.println("Pre Turn Betting: ");
+		playersTurn(pList);
+		System.out.println(pList);
+		System.out.println("Amount in pot: " + this.getBalance());
+		openTurn();
+		System.out.println("Turn: " + table.getTurn());
+		
+		
+		System.out.println("Pre River Betting: ");
+		playersTurn(pList);
+		System.out.println(pList);
+		System.out.println("Amount in pot: " + this.getBalance());
+		openRiver();
+		System.out.println("River: " + table.getRiver());
+		
+		System.out.println("Final Betting: ");
+		playersTurn(pList);
+		System.out.println(pList);
+		System.out.println("Amount in pot: " + this.getBalance());
+	}
+	
+	private void playersTurn(ArrayList<Player> pList) {
+		boolean roundFinished = false;
+		Player p;
+		int i = startFromPlayerAtPos -1;
+		while(!roundFinished) {
+			p = pList.get(i%pList.size());
+			if(!p.isFolded()) {
+				p.getChoice();
+				for(int k = i ; k < pList.size() + i; k++) {
+					p = pList.get(k%pList.size());
+					if(p.getAmtKeptAtTable() != table.getCurrBet()) {
+						roundFinished = false;
+						break;
+					}else {
+						roundFinished = true;
+					}
+				}
+			}
+			i = (i+1);
+		}
+	}
+	private void finaliseRound() {
+		startFromPlayerAtPos = (startFromPlayerAtPos+1)%table.getNumberOfPlayers();
+	}	//Check and distribute money.
 }
