@@ -55,7 +55,7 @@ public class Player extends Accounts{
 
 	@Override
 	public String toString() {
-		return "\nName = " + this.getName() + "\n"+ inHandCards + "\n";
+		return "\nName = " + this.getName() + "\n"+ inHandCards + "\n" + "balance: " + this.getBalance();
 	}
 	
 }

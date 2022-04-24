@@ -63,6 +63,8 @@ public class Table extends Puzzles
 			return null;
 		return river;
 	}
+	
+	
 	public void setFlock(ArrayList<Card> flock) 
 	{
 		this.flock = flock;
@@ -120,20 +122,6 @@ public class Table extends Puzzles
 	@Override
 	public String toString() {
 		return players.toString() + "\nFlock: " + flock + "\nTurn: " + turn + "\nRiver: " + river;
-	}
-
-
-	public static void main(String[] args) 
-	{
-		Table t1 = new Table();
-		Dealer d1 = new Dealer(t1);
-		Player p1 = new Player(t1, 500, "Tarun");
-		Player p2 = new Player(t1, 500, "Tyagi");
-		t1.addPlayer(p1);
-		t1.addPlayer(p2);
-		t1.addDealer(d1);
-		d1.distCards(t1.getPlayers());
-		System.out.println(t1);
 	}
 
 }
