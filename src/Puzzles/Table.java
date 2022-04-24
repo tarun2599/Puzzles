@@ -9,7 +9,7 @@ public class Table extends Puzzles
 	private Card river;
 	private boolean showFlock = false, showTurn = false, showRiver = false;
 	private ArrayList<Player> players;
-	private Dealer d1;
+	private Dealer dealer;
 	
 	public void addPlayer(Player P)
 	{
@@ -19,7 +19,7 @@ public class Table extends Puzzles
 	Table(ArrayList<Player> players, Dealer d1)
 	{
 		this.players = players;
-		this.d1 = d1;
+		this.dealer = d1;
 	}
 	public ArrayList<Card>[] getFlock() 
 	{	
@@ -60,7 +60,13 @@ public class Table extends Puzzles
 	public void setShowRiver() {
 		this.showRiver = true;
 	}
-	
+
+	/**
+	 * @return the dealer
+	 */
+	public Dealer getDealer() {
+		return dealer;
+	}
 	
 	
 	
