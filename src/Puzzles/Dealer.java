@@ -116,22 +116,12 @@ public class Dealer extends Accounts
 	}
 	
 	private void playersTurn(ArrayList<Player> pList) {
-		boolean roundFinished = false;
-		Player p;
+		Player p = null;
 		int i = startFromPlayerAtPos -1;
-		while(!roundFinished) {
+		while(table.getRaisedBy() == null || table.getRaisedBy() != p) {
 			p = pList.get(i%pList.size());
 			if(!p.isFolded()) {
 				p.getChoice();
-				for(int k = i ; k < pList.size() + i; k++) {
-					p = pList.get(k%pList.size());
-					if(p.getAmtKeptAtTable() != table.getCurrBet()) {
-						roundFinished = false;
-						break;
-					}else {
-						roundFinished = true;
-					}
-				}
 			}
 			i = (i+1);
 		}

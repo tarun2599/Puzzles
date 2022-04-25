@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player extends Accounts{
-	
+	static Scanner s = new Scanner(System.in);
 	private double amtKeptAtTable;	//InOneRound
 	private Table table;
 	private ArrayList<Card> inHandCards;
@@ -61,6 +61,7 @@ public class Player extends Accounts{
 			debit(newBet - amtKeptAtTable);
 			amtKeptAtTable = newBet;
 			table.setCurrBet(newBet);
+			table.setRaisedBy(this);
 		}
 	}
 	public void call() {
@@ -76,7 +77,7 @@ public class Player extends Accounts{
 	
 	public void getChoice() {
 		
-		Scanner s = new Scanner(System.in);
+		
 		int choice;
 		do{
 			
@@ -87,7 +88,8 @@ public class Player extends Accounts{
 			System.out.println("1: Check");
 			System.out.println("2: Call");
 			System.out.println("3: Raise");
-			choice  = s.nextInt();
+			choice  = Integer.parseInt(s.next());
+				
 		}while((!(choice == 0 || choice == 1 || choice == 2 || choice ==3)));
 		try {
 			switch(choice) {
@@ -98,14 +100,14 @@ public class Player extends Accounts{
 				case 2: call();
 						break;
 				case 3: System.out.println("Raise by amount: ");
-						raise(s.nextInt());
+						raise(Integer.parseInt(s.next()));
 						break;
 			}
 		}catch(IllegalCheckException e) {
 			System.out.println(e.getMessage());
 			getChoice();
 		}finally {
-			s.close();
+			//s.close();
 		}
 	}
 	

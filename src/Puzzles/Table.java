@@ -13,8 +13,7 @@ public class Table extends Puzzles
 	private Card river;
 	private boolean showFlock = false, showTurn = false, showRiver = false;
 	private int numberOfPlayers = 0;
-	
-	
+	private Player raisedBy;
 	/**
 	 * @return the dealer
 	 */
@@ -106,6 +105,18 @@ public class Table extends Puzzles
 			dealer = D;
 	}
 	
+	
+	
+	public Player getRaisedBy() {
+		return raisedBy;
+	}
+
+
+	public void setRaisedBy(Player raisedBy) {
+		this.raisedBy = raisedBy;
+	}
+
+
 	/**
 	 *
 	 */
