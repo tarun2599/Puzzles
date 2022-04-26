@@ -79,12 +79,13 @@ public class Player extends Accounts{
 	
 	public void fold() {
 		isFolded = true;
+		table.incNumOfFolded();
 	}
 	
 	/**
 	 * Get choice from the player.
 	 */
-	public void getChoice() {
+	public int getChoice() {
 		int choice;
 		do{
 			
@@ -116,10 +117,12 @@ public class Player extends Accounts{
 		}finally {
 			//s.close();
 		}
+		return choice;
 	}
 	
 	@Override
 	public String toString() {
 		return "\nName = " + this.getName() + "\n"+ inHandCards + "\n" + "balance: " + this.getBalance();
 	}
+	
 }

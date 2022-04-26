@@ -144,7 +144,6 @@ public class Dealer extends Accounts
 	private void finaliseRound() {
 		if((table.getNumberOfFolded() == table.getNumberOfPlayers() - 1)) {
 			//Winner
-			System.out.println("Winner: " + table.getRaisedBy());
 		}
 		startFromPlayerAtPos = (startFromPlayerAtPos+1)%table.getNumberOfPlayers();
 	}	//Check and distribute money.

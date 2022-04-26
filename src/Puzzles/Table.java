@@ -45,15 +45,12 @@ public class Table extends Puzzles
 	 * @return the numberOfFolded
 	 */
 	public int getNumberOfFolded() {
-		numberOfFolded = 0;
-		for(Player p:players) {
-			if(p.isFolded()) {
-				numberOfFolded++;
-			}
-		}
 		return numberOfFolded;
 	}
-
+	
+	public void incNumOfFolded() {
+		numberOfFolded++;
+	}
 
 	/**
 	 * @return the currBet
