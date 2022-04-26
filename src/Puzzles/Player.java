@@ -53,31 +53,38 @@ public class Player extends Accounts{
 			throw new IllegalCheckException("Please fold or raise");
 		}
 	}
+	
+	/**
+	 * Raise the bet. If you have not already met the current bet this 
+	 * functions as call and raise. 
+	 * @param amount Amount by which you want to raise the bet.
+	 */
 	public void raise(double amount) {
-		if(this.amtKeptAtTable != table.getCurrBet()) {
 			//Check if you have enough balance else all in.
 			double newBet = table.getCurrBet()  + amount;
-			table.getDealer().credit(newBet - amtKeptAtTable);//Add amount to pot
-			debit(newBet - amtKeptAtTable);
+			table.addMoneyToPot(newBet - amtKeptAtTable, this);//Add amount to pot
 			amtKeptAtTable = newBet;
 			table.setCurrBet(newBet);
 			table.setRaisedBy(this);
-		}
 	}
+	
+	/**
+	 * Matches your bet to the current bet on table.
+	 */
 	public void call() {
+		table.addMoneyToPot(table.getCurrBet() - amtKeptAtTable, this);
 		amtKeptAtTable = table.getCurrBet();
-		table.getDealer().credit(table.getCurrBet() - amtKeptAtTable);
-		debit(table.getCurrBet() - amtKeptAtTable);
-		
 	}
+	
 	
 	public void fold() {
 		isFolded = true;
 	}
 	
+	/**
+	 * Get choice from the player.
+	 */
 	public void getChoice() {
-		
-		
 		int choice;
 		do{
 			

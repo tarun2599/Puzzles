@@ -14,6 +14,8 @@ public class Table extends Puzzles
 	private boolean showFlock = false, showTurn = false, showRiver = false;
 	private int numberOfPlayers = 0;
 	private Player raisedBy;
+	private int numberOfFolded;
+	
 	/**
 	 * @return the dealer
 	 */
@@ -36,6 +38,20 @@ public class Table extends Puzzles
 	 */
 	public int getNumberOfPlayers() {
 		return numberOfPlayers;
+	}
+
+
+	/**
+	 * @return the numberOfFolded
+	 */
+	public int getNumberOfFolded() {
+		numberOfFolded = 0;
+		for(Player p:players) {
+			if(p.isFolded()) {
+				numberOfFolded++;
+			}
+		}
+		return numberOfFolded;
 	}
 
 
@@ -104,8 +120,14 @@ public class Table extends Puzzles
 		if(dealer == null)
 			dealer = D;
 	}
-	
-	
+	/**
+	 * 
+	 * @param amount Amount to be added to the pot
+	 */
+	public void addMoneyToPot(double amount, Player p) {
+		dealer.credit(amount);
+		p.debit(amount);
+	}
 	
 	public Player getRaisedBy() {
 		return raisedBy;
@@ -115,14 +137,19 @@ public class Table extends Puzzles
 	public void setRaisedBy(Player raisedBy) {
 		this.raisedBy = raisedBy;
 	}
-
+	
+	
 
 	/**
 	 *
 	 */
 	@Override
 	public String toString() {
-		return players.toString() + "\nFlock: " + flock + "\nTurn: " + turn + "\nRiver: " + river;
+		String str = players.toString();
+		str += "\nFlock: " + flock + "\nTurn: " + turn + "\nRiver: " + river;
+		str += "\nRaised by: " + raisedBy;
+		str += "\nCurrent Bet: " + currBet;
+		return str;
 	}
 
 }

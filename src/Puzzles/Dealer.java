@@ -81,7 +81,9 @@ public class Dealer extends Accounts
 	{
 		table.setShowRiver();
 	}
-	
+	/**
+	 * Betting and opening of cards
+	 */
 	public void playRound() {
 		ArrayList<Player> pList = table.getPlayers();
 		distCards(pList);
@@ -99,6 +101,7 @@ public class Dealer extends Accounts
 		System.out.println(pList);
 		System.out.println("Amount in pot: " + this.getBalance());
 		openTurn();
+		System.out.println("Flock: " + table.getFlock());
 		System.out.println("Turn: " + table.getTurn());
 		
 		
@@ -107,26 +110,49 @@ public class Dealer extends Accounts
 		System.out.println(pList);
 		System.out.println("Amount in pot: " + this.getBalance());
 		openRiver();
+		System.out.println("Flock: " + table.getFlock());
+		System.out.println("Turn: " + table.getTurn());
 		System.out.println("River: " + table.getRiver());
 		
 		System.out.println("Final Betting: ");
 		playersTurn(pList);
 		System.out.println(pList);
 		System.out.println("Amount in pot: " + this.getBalance());
+		finaliseRound();
 	}
-	
-	private void playersTurn(ArrayList<Player> pList) {
-		Player p = null;
+	/**
+	 * get players choice in loop as done in poker game until you reach back to the last raised person or there is only
+	 * one unfolded person left.
+	 * @param pList	ArrayList of players.
+	 */
+	public void playersTurn(ArrayList<Player> pList) {
 		int i = startFromPlayerAtPos -1;
-		while(table.getRaisedBy() == null || table.getRaisedBy() != p) {
-			p = pList.get(i%pList.size());
+		Player p = pList.get(i%pList.size());
+		table.setRaisedBy(p);
+		boolean flagForFirstChance = true;
+		boolean onlyOneLeft = false;
+		while((flagForFirstChance || table.getRaisedBy() != p) && !onlyOneLeft) {
 			if(!p.isFolded()) {
 				p.getChoice();
 			}
 			i = (i+1);
+			p = pList.get(i%pList.size());
+			flagForFirstChance = false;
+			onlyOneLeft = (table.getNumberOfFolded() == table.getNumberOfPlayers() - 1);
 		}
 	}
 	private void finaliseRound() {
+		if((table.getNumberOfFolded() == table.getNumberOfPlayers() - 1)) {
+			//Winner
+			System.out.println("Winner: " + table.getRaisedBy());
+		}
 		startFromPlayerAtPos = (startFromPlayerAtPos+1)%table.getNumberOfPlayers();
 	}	//Check and distribute money.
+
+	@Override
+	public String toString() {
+		return "Dealer [Pot: " + getBalance() + "]";
+	}
+	
+	
 }
