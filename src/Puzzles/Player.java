@@ -116,7 +116,6 @@ public class Player extends Accounts{
 			System.out.println(e.getMessage());
 			getChoice();
 		}
-		System.out.flush();
 		return choice;
 	}
 	
