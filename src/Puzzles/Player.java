@@ -92,6 +92,7 @@ public class Player extends Accounts{
 			System.out.println(this.getName() + "'s Choice...");
 			System.out.println("Current Bet: " + table.getCurrBet());
 			System.out.println("Your money on table: " + amtKeptAtTable);
+			System.out.println("Your Cards: " + inHandCards);
 			System.out.println("0: Fold");
 			System.out.println("1: Check");
 			System.out.println("2: Call");
@@ -114,15 +115,13 @@ public class Player extends Accounts{
 		}catch(IllegalCheckException e) {
 			System.out.println(e.getMessage());
 			getChoice();
-		}finally {
-			//s.close();
 		}
+		System.out.flush();
 		return choice;
 	}
 	
 	@Override
 	public String toString() {
-		return "\nName = " + this.getName() + "\n"+ inHandCards + "\n" + "balance: " + this.getBalance();
+		return "Name = " + this.getName() + ", Balance: " + this.getBalance();
 	}
-	
 }

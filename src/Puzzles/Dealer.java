@@ -140,13 +140,18 @@ public class Dealer extends Accounts
 			flagForFirstChance = false;
 			onlyOneLeft = (table.getNumberOfFolded() == table.getNumberOfPlayers() - 1);
 		}
+		//Pre-Round initializations.
+		table.setRaisedBy(null);
 	}
 	private void finaliseRound() {
 		if((table.getNumberOfFolded() == table.getNumberOfPlayers() - 1)) {
 			//Winner
 		}
-		startFromPlayerAtPos = (startFromPlayerAtPos+1)%table.getNumberOfPlayers();
-	}	//Check and distribute money.
+		//Check and distribute money.
+		
+		//Pre Game Initialization
+		startFromPlayerAtPos++;
+	}	
 
 	@Override
 	public String toString() {
