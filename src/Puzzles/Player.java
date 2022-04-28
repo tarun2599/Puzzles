@@ -53,37 +53,46 @@ public class Player extends Accounts{
 			throw new IllegalCheckException("Please fold or raise");
 		}
 	}
+	
+	/**
+	 * Raise the bet. If you have not already met the current bet this 
+	 * functions as call and raise. 
+	 * @param amount Amount by which you want to raise the bet.
+	 */
 	public void raise(double amount) {
-		if(this.amtKeptAtTable != table.getCurrBet()) {
 			//Check if you have enough balance else all in.
 			double newBet = table.getCurrBet()  + amount;
-			table.getDealer().credit(newBet - amtKeptAtTable);//Add amount to pot
-			debit(newBet - amtKeptAtTable);
+			table.addMoneyToPot(newBet - amtKeptAtTable, this);//Add amount to pot
 			amtKeptAtTable = newBet;
 			table.setCurrBet(newBet);
 			table.setRaisedBy(this);
-		}
 	}
+	
+	/**
+	 * Matches your bet to the current bet on table.
+	 */
 	public void call() {
+		table.addMoneyToPot(table.getCurrBet() - amtKeptAtTable, this);
 		amtKeptAtTable = table.getCurrBet();
-		table.getDealer().credit(table.getCurrBet() - amtKeptAtTable);
-		debit(table.getCurrBet() - amtKeptAtTable);
-		
 	}
+	
 	
 	public void fold() {
 		isFolded = true;
+		table.incNumOfFolded();
 	}
 	
-	public void getChoice() {
-		
-		
+	/**
+	 * Get choice from the player.
+	 */
+	public int getChoice() {
 		int choice;
 		do{
 			
 			System.out.println(this.getName() + "'s Choice...");
 			System.out.println("Current Bet: " + table.getCurrBet());
 			System.out.println("Your money on table: " + amtKeptAtTable);
+			System.out.println("Your Cards: " + inHandCards);
 			System.out.println("0: Fold");
 			System.out.println("1: Check");
 			System.out.println("2: Call");
@@ -106,13 +115,12 @@ public class Player extends Accounts{
 		}catch(IllegalCheckException e) {
 			System.out.println(e.getMessage());
 			getChoice();
-		}finally {
-			//s.close();
 		}
+		return choice;
 	}
 	
 	@Override
 	public String toString() {
-		return "\nName = " + this.getName() + "\n"+ inHandCards + "\n" + "balance: " + this.getBalance();
+		return "Name = " + this.getName() + ", Balance: " + this.getBalance();
 	}
 }
